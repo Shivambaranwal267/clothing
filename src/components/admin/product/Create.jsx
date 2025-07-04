@@ -35,21 +35,21 @@ const Create = ({ placeholder }) => {
     formState: { errors },
   } = useForm();
 
-    const fetchSizes = async () => {
-      const res = await fetch(`${apiUrl}/sizes`, {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${adminToken()}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((result) => {
-          console.log(result);
-          setSizes(result.data);
-        });
-    };
+  const fetchSizes = async () => {
+    const res = await fetch(`${apiUrl}/sizes`, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${adminToken()}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        setSizes(result.data);
+      });
+  };
 
   const saveProduct = async (data) => {
     const formData = { ...data, description: content, gallery: gallery };
@@ -135,14 +135,14 @@ const Create = ({ placeholder }) => {
         galleryImages.push(result.data.image_url);
         setGalleryImages(galleryImages);
         setDisable(false);
-        e.target.value = ""
+        e.target.value = "";
       });
   };
 
-  const deleteImages = (image)=>{
-   const newGallery = galleryImages.filter(gallery => gallery != image)
-   setGalleryImages(newGallery)
-  }
+  const deleteImages = (image) => {
+    const newGallery = galleryImages.filter((gallery) => gallery != image);
+    setGalleryImages(newGallery);
+  };
 
   useEffect(() => {
     fetchCategories();
@@ -298,12 +298,12 @@ const Create = ({ placeholder }) => {
                     <div className="col-md-6">
                       <div className="mb-3">
                         <label htmlFor="" className="form-label">
-                          Discounted Price
+                          Compare Price
                         </label>
                         <input
                           {...register("compare_price")}
                           type="text"
-                          placeholder="Discounted Price"
+                          placeholder="Compare Price"
                           className="form-control"
                         />
                       </div>
@@ -418,42 +418,41 @@ const Create = ({ placeholder }) => {
 
                   <h3 className="py-3 border-bottom mb-3">Sizes</h3>
 
-                    <div className="mb-3">
-
-                      {sizes &&
-                        sizes.map((size) => {
-                          return (
-                            <div
-                              className="form-check-inline ps-2"
-                              key={`psize-${size.id}`}
+                  <div className="mb-3">
+                    {sizes &&
+                      sizes.map((size) => {
+                        return (
+                          <div
+                            className="form-check-inline ps-2"
+                            key={`psize-${size.id}`}
+                          >
+                            <input
+                              {...register("sizes")}
+                              checked={sizesChecked.includes(size.id)}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setSizesChecked([...sizesChecked, size.id]);
+                                } else {
+                                  setSizesChecked(
+                                    sizesChecked.filter((sid) => size.id != sid)
+                                  );
+                                }
+                              }}
+                              className="form-check-input"
+                              type="checkbox"
+                              value={size.id}
+                              id={`size-${size.id}`}
+                            />
+                            <label
+                              className="form-check-label ps-2"
+                              htmlFor="{`size-${size.id}`}"
                             >
-                              <input
-                                {...register("sizes")}
-                                checked={sizesChecked.includes(size.id)}
-                                onChange={(e) => {
-                                  if (e.target.checked) {
-                                        setSizesChecked([...sizesChecked,size.id])
-                                  } else {
-                                        setSizesChecked(sizesChecked.filter(sid => size.id != sid))
-                                  }
-                                }}
-                                className="form-check-input"
-                                type="checkbox"
-                                value={size.id}
-                                id={`size-${size.id}`}
-                              />
-                              <label
-                                className="form-check-label ps-2"
-                                htmlFor="{`size-${size.id}`}"
-                              >
-                                {size.name}
-                              </label>
-                            </div>
-                          );
-                        })}
-                    </div>
-
-
+                              {size.name}
+                            </label>
+                          </div>
+                        );
+                      })}
+                  </div>
 
                   <h3 className="py-3 border-bottom mb-3">Gallery</h3>
 
@@ -471,16 +470,17 @@ const Create = ({ placeholder }) => {
                   <div className="mb-3">
                     <div className="row">
                       {galleryImages &&
-                        galleryImages.map((image,index) => {
+                        galleryImages.map((image, index) => {
                           return (
                             <div className="col-md-3" key={`image-${index}`}>
                               <div className="card shadow">
-                                <img className="w-100" src={image} alt="" />                              </div>
+                                <img className="w-100" src={image} alt="" />{" "}
+                              </div>
                               <button
-                                  className=" w-100 btn btn-danger mt-3"
-                                  onClick={() => deleteImages(image)}
-                                >
-                                  Delete
+                                className=" w-100 btn btn-danger mt-3"
+                                onClick={() => deleteImages(image)}
+                              >
+                                Delete
                               </button>
                             </div>
                           );

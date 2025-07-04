@@ -70,11 +70,50 @@ const Edit = ({ placeholder }) => {
     },
   });
 
+  // const saveProduct = async (data) => {
+  //   const formData = { ...data, description: content };
+
+  //   setDisable(true);
+  //   console.log(data);
+
+  //   const res = await fetch(`${apiUrl}/products/${params.id}`, {
+  //     method: "PUT",
+  //     headers: {
+  //       "Content-type": "application/json",
+  //       Accept: "application/json",
+  //       Authorization: `Bearer ${adminToken()}`,
+  //     },
+  //     body: JSON.stringify(formData),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       setDisable(false);
+  //       if (result.status == 200) {
+  //         toast.success(result.message);
+  //         navigate("/admin/products");
+  //       } else {
+  //         const formErrors = result.errors;
+  //         Object.keys(formErrors).forEach((field) => {
+  //           setError(field, { message: formErrors[field][0] });
+  //         });
+  //       }
+  //     });
+  // };
+
   const saveProduct = async (data) => {
-    const formData = { ...data, description: content };
+  try {
+    if (!params.id) {
+      toast.error("Invalid product ID");
+      return;
+    }
+
+    const formData = { ...data, description: content, sizes: sizesChecked };
+    console.log("Sending Form Data:", formData);
+    console.log("SKU Sent:", formData.sku);
+    console.log("API URL:", `${apiUrl}/products/${params.id}`);
+    console.log("Token:", adminToken());
 
     setDisable(true);
-    console.log(data);
 
     const res = await fetch(`${apiUrl}/products/${params.id}`, {
       method: "PUT",
@@ -84,21 +123,43 @@ const Edit = ({ placeholder }) => {
         Authorization: `Bearer ${adminToken()}`,
       },
       body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setDisable(false);
-        if (result.status == 200) {
-          toast.success(result.message);
-          navigate("/admin/products");
-        } else {
-          const formErrors = result.errors;
-          Object.keys(formErrors).forEach((field) => {
-            setError(field, { message: formErrors[field][0] });
-          });
-        }
+    });
+
+    console.log("Response Status:", res.status);
+    const result = await res.json();
+    console.log("Response Body:", result);
+
+    setDisable(false);
+
+    if (res.status === 200) {
+      toast.success(result.message || "Product updated successfully");
+      // Verify SKU after update
+      const updatedRes = await fetch(`${apiUrl}/products/${params.id}`, {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${adminToken()}`,
+        },
       });
-  };
+      const updatedResult = await updatedRes.json();
+      console.log("Updated SKU:", updatedResult.data.sku);
+      navigate("/admin/products");
+    } else {
+      if (result.errors) {
+        Object.keys(result.errors).forEach((field) => {
+          setError(field, { message: result.errors[field][0] });
+        });
+      } else {
+        toast.error(result.message || "Failed to update product");
+      }
+    }
+  } catch (error) {
+    setDisable(false);
+    console.error("Fetch Error:", error);
+    toast.error("An error occurred while updating the product");
+  }
+};
 
   const fetchCategories = async () => {
     const res = await fetch(`${apiUrl}/categories`, {
@@ -378,12 +439,12 @@ const Edit = ({ placeholder }) => {
                     <div className="col-md-6">
                       <div className="mb-3">
                         <label htmlFor="" className="form-label">
-                          Discounted Price
+                          Compare Price
                         </label>
                         <input
                           {...register("compare_price")}
                           type="text"
-                          placeholder="Discounted Price"
+                          placeholder="Compare Price"
                           className="form-control"
                         />
                       </div>
