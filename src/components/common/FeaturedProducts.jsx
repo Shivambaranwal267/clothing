@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { apiUrl } from "../common/http";
+import { Link } from "react-router-dom";
 
 const FeaturedProducts = () => {
   const [products, setProducts] = useState([]);
@@ -35,22 +36,23 @@ const FeaturedProducts = () => {
                 <div className="col-md-3 col-6" key={`product-${product.id}`}>
                   <div className="product card border-0">
                     <div className="card-img">
-                      <img
-                        src={product.image_url}
-                        alt="productImg"
-                        className="w-100"
-                      />
+                      <Link to={`/product/${product.id}`}>
+                        <img
+                          src={product.image_url}
+                          alt="productImg"
+                          className="w-100"
+                        />
+                      </Link>
                     </div>
                     <div className="card-body pt-3">
-                      <a href="">{product.title}</a>
+                      <Link to={`/product/${product.id}`}>{product.title}</Link>
                       <div className="price">
                         ${product.price}
-                         {
-                          product.compare_price && <span className="text-decoration-line-through">
-                          ${product.compare_price}
-                        </span>
-                        }
-                        
+                        {product.compare_price && (
+                          <span className="text-decoration-line-through">
+                            ${product.compare_price}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>

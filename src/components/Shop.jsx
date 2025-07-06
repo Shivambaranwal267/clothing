@@ -175,11 +175,9 @@ const Shop = () => {
                       return (
                         <li className="mb-2" key={`brand=${brand.id}`}>
                           <input
-                           defaultChecked={
+                            defaultChecked={
                               searchParams.get("brand")
-                                ? searchParams
-                                    .get("brand")
-                                    .includes(brand.id)
+                                ? searchParams.get("brand").includes(brand.id)
                                 : false
                             }
                             type="checkbox"
@@ -208,7 +206,7 @@ const Shop = () => {
                     >
                       <div className="product card border-0">
                         <div className="card-img">
-                          <Link to="/product">
+                          <Link to={`/product/${product.id}`}>
                             <img
                               src={product.image_url}
                               alt="productImg"
@@ -217,7 +215,9 @@ const Shop = () => {
                           </Link>
                         </div>
                         <div className="card-body pt-3">
-                          <Link to="/product">{product.title}</Link>
+                          <Link to={`/product/${product.id}`}>
+                            {product.title}
+                          </Link>
                           <div className="price">
                             ${product.price} &nbsp;
                             {product.compare_price && (
