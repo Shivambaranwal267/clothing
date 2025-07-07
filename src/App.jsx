@@ -8,6 +8,7 @@ import Login from "./components/admin/Login";
 import { ToastContainer } from "react-toastify";
 import { AdminRequireAuth } from "./components/admin/AdminRequireAuth";
 import Dasboard from "./components/admin/Dasboard";
+import Register from "./components/register";
 
 import { default as ShowCategories } from "./components/admin/category/Show";
 import { default as CreateCategory } from "./components/admin/category/Create";
@@ -21,6 +22,7 @@ import { default as ShowProducts } from "./components/admin/product/Show";
 import { default as CreateProduct } from "./components/admin/product/Create";
 import { default as EditProduct } from "./components/admin/product/Edit";
 
+
 function App() {
   return (
     <>
@@ -31,6 +33,7 @@ function App() {
           <Route path="/product/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/account/register" element={<Register/>}/>
 
           {/* backend */}
 
