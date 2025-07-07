@@ -202,7 +202,24 @@ footer {
 }
 
 .login {
-  width: 400px;
+  width: 450px;
+}
+
+.cart-bucket {
+  position: relative;
+  span {
+    position: relative;
+    background-color: #f97316;
+    color: #fff;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    top: -5px;
+    right: -13px;
+    font-size: 12px;
+    text-align: center;
+  }
 }
 
 .sidebar {
@@ -214,7 +231,7 @@ footer {
         display: block;
         padding: 10px;
         color: $primary-black;
-        &:hover{
+        &:hover {
           color: $primary-color;
         }
       }
