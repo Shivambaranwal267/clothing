@@ -5,7 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-const Register = () => {
+const Login = () => {
+    
   const {
     register,
     handleSubmit,
@@ -42,7 +43,6 @@ const Register = () => {
   };
 
   return (
-
     <Layout>
       <div className="container d-flex justify-content-center py-5">
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -127,8 +127,7 @@ const Register = () => {
         </form>
       </div>
     </Layout>
-    
   );
 };
 
-export default Register;
+export default Login;
