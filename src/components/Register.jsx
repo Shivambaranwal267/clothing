@@ -42,7 +42,6 @@ const Register = () => {
   };
 
   return (
-
     <Layout>
       <div className="container d-flex justify-content-center py-5">
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -120,14 +119,14 @@ const Register = () => {
               </button>
 
               <div className="d-flex justify-content-center pt-4 pb-2">
-                Already have an account? @nbsp;<a href="#">Login</a>
+                Already have an account? &nbsp;
+                <Link to="/account/login">Login</Link>
               </div>
             </div>
           </div>
         </form>
       </div>
     </Layout>
-    
   );
 };
 

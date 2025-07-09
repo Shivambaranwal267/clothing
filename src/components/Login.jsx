@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import Layout from "./common/Layout";
 import { apiUrl } from "./common/http";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { AuthContext } from "./context/Auth";
 
 const Login = () => {
-    
   const {
     register,
     handleSubmit,
@@ -14,10 +14,12 @@ const Login = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
+  const {login} = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    const res = await fetch(`${apiUrl}/register`, {
+    const res = await fetch(`${apiUrl}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,18 +28,21 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
 
         if (result.status === 200) {
-          toast.success(result.message);
+         const userInfo = {
+          token: result.token,
+          id: result.id,
+          name: result.name,
+        };
 
-          navigate("/account/login");
+        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        login(userInfo);
+        toast.success("Login successful!");
+        navigate("/account/dashboard");
         } else {
-          // toast.error(result.message || "Login failed");
-          const formErrors = result.errors;
-          Object.keys(formErrors).forEach((field) => {
-            setError(field, { message: formErrors[field][0] });
-          });
+          toast.error(result.message || "Login failed");
+          
         }
       });
   };
@@ -48,25 +53,7 @@ const Login = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="card shadow border-0 login">
             <div className="card-body p-4">
-              <h3 className=" border-bottom pb-2 mb-3 text-center">Register</h3>
-
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label">
-                  Name
-                </label>
-                <input
-                  {...register("name", {
-                    required: "The name field is required",
-                  })}
-                  type="text"
-                  id="name"
-                  className={`form-control ${errors.name && "is-invalid"}`}
-                  placeholder="Enter your name..."
-                />
-                {errors.email && (
-                  <p className="invalid-feedback">{errors.name?.message}</p>
-                )}
-              </div>
+              <h3 className=" border-bottom pb-2 mb-3 text-center">Login</h3>
 
               <div className="mb-3">
                 {/* Changed htmlFor to "email" and added id="email" to input */}
@@ -116,11 +103,12 @@ const Login = () => {
                 className="btn btn-secondary w-100"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "You have register..." : "Register"}
+                {isSubmitting ? "logging..." : "Login"}
               </button>
 
               <div className="d-flex justify-content-center pt-4 pb-2">
-                Already have an account? @nbsp;<a href="#">Login</a>
+                Don't have an account? &nbsp;
+                <Link to="/account/register">Register</Link>
               </div>
             </div>
           </div>
