@@ -10,7 +10,6 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors, isSubmitting },
   } = useForm();
 
@@ -39,7 +38,7 @@ const Login = () => {
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
         login(userInfo);
         toast.success("Login successful!");
-        navigate("/account/dashboard");
+        navigate("/account");
         } else {
           toast.error(result.message || "Login failed");
           

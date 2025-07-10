@@ -5,3 +5,9 @@ export const adminToken = () => {
 //   const adminData = JSON.parse(data);
   return data.token;
 };
+
+export const userToken = () => {
+  const data = JSON.parse(localStorage.getItem("userInfo"))
+//   const userData = JSON.parse(data);
+  return data.token;
+};

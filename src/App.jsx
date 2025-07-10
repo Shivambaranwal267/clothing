@@ -12,6 +12,7 @@ import Dasboard from "./components/admin/Dasboard";
 import Register from "./components/Register";
 import { default as UserLogin } from "./components/Login";
 import Profile from "./components/Profile";
+import Confirmation from "./components/Confirmation";
 
 import { default as ShowCategories } from "./components/admin/category/Show";
 import { default as CreateCategory } from "./components/admin/category/Create";
@@ -25,7 +26,6 @@ import { default as ShowProducts } from "./components/admin/product/Show";
 import { default as CreateProduct } from "./components/admin/product/Create";
 import { default as EditProduct } from "./components/admin/product/Edit";
 
-
 function App() {
   return (
     <>
@@ -36,7 +36,7 @@ function App() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/product/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
+
           <Route path="/account/register" element={<Register />} />
           <Route path="/account/login" element={<UserLogin />} />
 
@@ -45,6 +45,24 @@ function App() {
             element={
               <RequireAuth>
                 <Profile />
+              </RequireAuth>
+            }
+          />
+
+          <Route
+            path="/checkout"
+            element={
+              <RequireAuth>
+                <Checkout />
+              </RequireAuth>
+            }
+          />
+
+          <Route
+            path="/order/confirmation/:id"
+            element={
+              <RequireAuth>
+                <Confirmation />
               </RequireAuth>
             }
           />

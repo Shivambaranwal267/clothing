@@ -61,7 +61,7 @@ const Header = () => {
             </Nav>
 
             <div className="nav-right d-flex">
-              <Link to="" className="ms-3">
+              <Link to="/account" className="ms-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="28"
