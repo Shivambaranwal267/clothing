@@ -1,26 +1,46 @@
 import React, { useState } from "react";
 import Sidebar from "../../common/Sidebar";
 import Layout from "../../common/Layout";
-import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { adminToken, apiUrl } from "../../common/http";
 import { toast } from "react-toastify";
 
-const Create = () => {
+const Shipping = () => {
   const [disable, setDisable] = useState(false);
-  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: async () => {
+      await fetch(`${apiUrl}/get-shipping`, {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${adminToken()}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          if (result.status == 200) {
+            reset({
+              shipping_charge: result.data.shipping_charge,
+            });
+          } else {
+            console.log("Something went wrong");
+          }
+        });
+    },
+  });
 
-  const saveCategory = async (data) => {
+  const saveShipping = async (data) => {
     setDisable(true);
     console.log(data);
 
-    const res = await fetch(`${apiUrl}/categories`, {
+    const res = await fetch(`${apiUrl}/save-shipping`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -34,67 +54,45 @@ const Create = () => {
         setDisable(false);
         if (result.status == 200) {
           toast.success(result.message);
-          navigate("/admin/categories");
         } else {
           console.log("Something went wrong");
         }
       });
   };
 
+  //   useEffect(() => saveShipping());
+
   return (
     <Layout>
       <div className="container">
         <div className="row">
           <div className="d-flex justify-content-between mt-5 pb-3">
-            <h4 className="h4 pb-0 mb-0">Categories / Create</h4>
-            <Link to="/admin/categories" className="btn btn-primary">
-              Back
-            </Link>
+            <h4 className="h4 pb-0 mb-0">Shipping</h4>
           </div>
           <div className="col-md-3">
             <Sidebar />
           </div>
           <div className="col-md-9">
-            <form onSubmit={handleSubmit(saveCategory)}>
+            <form onSubmit={handleSubmit(saveShipping)}>
               <div className="card shadow">
                 <div className="card-body p-4">
                   <div className="mb-3">
                     <label htmlFor="name" className="form-label">
-                      Name
+                      Shipping Charge
                     </label>
                     <input
-                      {...register("name", {
-                        required: "The name field is required", // Fixed typo
+                      {...register("shipping_charge", {
+                        required: "The Shipping charge field is required", // Fixed typo
                       })}
                       type="text"
-                      id="name"
-                      className={`form-control ${errors.name && "is-invalid"}`}
-                      placeholder="Name"
-                    />
-                    {errors.name && (
-                      <p className="invalid-feedback">{errors.name?.message}</p>
-                    )}
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="status" className="form-label">
-                      Status
-                    </label>
-                    <select
-                      {...register("status", {
-                        required: "Please select a status",
-                      })}
-                      id="status"
                       className={`form-control ${
-                        errors.status && "is-invalid"
+                        errors.shipping_charge && "is-invalid"
                       }`}
-                    >
-                      <option value="">Select a Status</option>
-                      <option value="1">Active</option>
-                      <option value="0">Block</option>
-                    </select>
-                    {errors.status && (
+                      placeholder="shipping charges..."
+                    />
+                    {errors.shipping_charge && (
                       <p className="invalid-feedback">
-                        {errors.status?.message}
+                        {errors.shipping_charge?.message}
                       </p>
                     )}
                   </div>
@@ -105,7 +103,7 @@ const Create = () => {
                 type="submit"
                 className="btn btn-primary mt-3"
               >
-                Create
+                Save
               </button>
             </form>
           </div>
@@ -115,4 +113,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default Shipping;

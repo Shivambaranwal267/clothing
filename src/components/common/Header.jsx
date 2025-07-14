@@ -25,7 +25,7 @@ const Header = () => {
         } else {
           console.log("Something went wrong");
         }
-        console.log(result);
+        // console.log(result);
       });
   };
 

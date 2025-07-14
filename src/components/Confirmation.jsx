@@ -33,7 +33,7 @@ const Confirmation = () => {
 
   useEffect(() => {
     fetchOrder();
-  });
+  },[]);
 
   return (
     <Layout>

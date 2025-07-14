@@ -14,6 +14,9 @@ import { default as UserLogin } from "./components/Login";
 import Profile from "./components/Profile";
 import Confirmation from "./components/Confirmation";
 
+import MyOrders from "./components/front/MyOrders";
+import { default as UserOrderDetail } from "./components/front/OrderDetail";
+
 import { default as ShowCategories } from "./components/admin/category/Show";
 import { default as CreateCategory } from "./components/admin/category/Create";
 import { default as EditCategory } from "./components/admin/category/Edit";
@@ -25,6 +28,10 @@ import { default as EditBrands } from "./components/admin/brand/Edit";
 import { default as ShowProducts } from "./components/admin/product/Show";
 import { default as CreateProduct } from "./components/admin/product/Create";
 import { default as EditProduct } from "./components/admin/product/Edit";
+
+import ShowOrders from "./components/admin/orders/ShowOrders";
+import OrderDetail from "./components/admin/orders/OrderDetail";
+import Shipping from "./components/admin/shipping/Shipping";
 
 function App() {
   return (
@@ -45,6 +52,24 @@ function App() {
             element={
               <RequireAuth>
                 <Profile />
+              </RequireAuth>
+            }
+          />
+
+          <Route
+            path="/account/orders"
+            element={
+              <RequireAuth>
+                <MyOrders />
+              </RequireAuth>
+            }
+          />
+
+          <Route
+            path="/account/orders/details/:id"
+            element={
+              <RequireAuth>
+                <UserOrderDetail />
               </RequireAuth>
             }
           />
@@ -156,6 +181,33 @@ function App() {
             element={
               <AdminRequireAuth>
                 <EditProduct />
+              </AdminRequireAuth>
+            }
+          />
+
+          <Route
+            path="/admin/orders"
+            element={
+              <AdminRequireAuth>
+                <ShowOrders />
+              </AdminRequireAuth>
+            }
+          />
+
+          <Route
+            path="/admin/orders/:id"
+            element={
+              <AdminRequireAuth>
+                <OrderDetail />
+              </AdminRequireAuth>
+            }
+          />
+
+          <Route
+            path="/admin/shipping"
+            element={
+              <AdminRequireAuth>
+                <Shipping />
               </AdminRequireAuth>
             }
           />
