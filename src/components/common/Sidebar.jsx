@@ -9,7 +9,7 @@ const Sidebar = () => {
       <div className="card-body p-4">
         <ul>
           <li>
-            <a href="">Dashboard</a>
+            <Link to="/admin/dashboard">Dashboard</Link>
           </li>
 
           <li>
@@ -37,7 +37,7 @@ const Sidebar = () => {
           </li>
 
           <li>
-            <Link to="">Change Password</Link>
+            <Link to="/admin/change-password">Change Password</Link>
           </li>
 
           <li>

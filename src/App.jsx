@@ -32,6 +32,7 @@ import { default as EditProduct } from "./components/admin/product/Edit";
 import ShowOrders from "./components/admin/orders/ShowOrders";
 import OrderDetail from "./components/admin/orders/OrderDetail";
 import Shipping from "./components/admin/shipping/Shipping";
+import ChangePassword from "./components/admin/ChangePassword";
 
 function App() {
   return (
@@ -104,6 +105,17 @@ function App() {
               </AdminRequireAuth>
             }
           />
+
+           <Route
+            path="/admin/change-password"
+            element={
+              <AdminRequireAuth>
+                <ChangePassword />
+              </AdminRequireAuth>
+            }
+          />
+
+
 
           <Route
             path="/admin/categories"
