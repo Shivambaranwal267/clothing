@@ -14,7 +14,12 @@ import { default as UserLogin } from "./components/Login";
 import Profile from "./components/Profile";
 import Confirmation from "./components/Confirmation";
 
+import ShowOrders from "./components/admin/orders/ShowOrders";
+import OrderDetail from "./components/admin/orders/OrderDetail";
+import Shipping from "./components/admin/shipping/Shipping";
+import ChangePassword from "./components/admin/ChangePassword";
 import MyOrders from "./components/front/MyOrders";
+
 import { default as UserOrderDetail } from "./components/front/OrderDetail";
 
 import { default as ShowCategories } from "./components/admin/category/Show";
@@ -29,10 +34,7 @@ import { default as ShowProducts } from "./components/admin/product/Show";
 import { default as CreateProduct } from "./components/admin/product/Create";
 import { default as EditProduct } from "./components/admin/product/Edit";
 
-import ShowOrders from "./components/admin/orders/ShowOrders";
-import OrderDetail from "./components/admin/orders/OrderDetail";
-import Shipping from "./components/admin/shipping/Shipping";
-import ChangePassword from "./components/admin/ChangePassword";
+import { default as FrontChangePassword } from "./components/ChangePassword";
 
 function App() {
   return (
@@ -47,6 +49,15 @@ function App() {
 
           <Route path="/account/register" element={<Register />} />
           <Route path="/account/login" element={<UserLogin />} />
+
+          <Route
+            path="/account/change-password"
+            element={
+              <RequireAuth>
+                <FrontChangePassword />
+              </RequireAuth>
+            }
+          />
 
           <Route
             path="/account"
@@ -106,7 +117,7 @@ function App() {
             }
           />
 
-           <Route
+          <Route
             path="/admin/change-password"
             element={
               <AdminRequireAuth>
@@ -114,8 +125,6 @@ function App() {
               </AdminRequireAuth>
             }
           />
-
-
 
           <Route
             path="/admin/categories"

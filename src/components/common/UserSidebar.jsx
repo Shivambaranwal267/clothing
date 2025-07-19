@@ -19,7 +19,7 @@ const UserSidebar = () => {
           </li>
 
           <li>
-            <Link to="#">Change Password</Link>
+            <Link to="/account/change-password">Change Password</Link>
           </li>
 
           <li>
