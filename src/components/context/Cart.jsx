@@ -85,7 +85,7 @@ export const CartProvider = ({ children }) => {
   const shipping = () => {
     let shippingAmount = 0;
     cartData.map((item) => {
-      shippingAmount += item.qty * shippingCost;
+      shippingAmount =  shippingCost;
     });
     return shippingAmount;
   };
@@ -99,7 +99,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const grandTotal = () => {
-    return subTotal() + shipping();
+    return subTotal() + shippingCost;
   };
 
   const updateCartItem = (itemId, newQty) => {

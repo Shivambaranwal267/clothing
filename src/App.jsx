@@ -34,7 +34,12 @@ import { default as ShowProducts } from "./components/admin/product/Show";
 import { default as CreateProduct } from "./components/admin/product/Create";
 import { default as EditProduct } from "./components/admin/product/Edit";
 
+import { default as ShowBanner } from "./components/admin/banner/Show";
+import { default as CreateBanner } from "./components/admin/banner/Create";
+import  { default as EditBanner } from "./components/admin/banner/Edit";
+
 import { default as FrontChangePassword } from "./components/ChangePassword";
+import User from "./components/admin/User";
 
 function App() {
   return (
@@ -108,6 +113,34 @@ function App() {
 
           <Route path="/admin/login" element={<Login />} />
 
+         
+
+          <Route
+            path="/admin/banner/create"
+            element={
+              <AdminRequireAuth>
+                <CreateBanner />
+              </AdminRequireAuth>
+            }
+          />
+          <Route
+            path="/admin/banner/edit/{id}"
+            element={
+              <AdminRequireAuth>
+                <EditBanner />
+              </AdminRequireAuth>
+            }
+          />
+
+          <Route
+            path="/admin/banner/show"
+            element={
+              <AdminRequireAuth>
+                <ShowBanner/>
+              </AdminRequireAuth>
+            }
+          />
+
           <Route
             path="/admin/dashboard"
             element={
@@ -122,6 +155,15 @@ function App() {
             element={
               <AdminRequireAuth>
                 <ChangePassword />
+              </AdminRequireAuth>
+            }
+          />
+
+          <Route
+            path="/admin/user"
+            element={
+              <AdminRequireAuth>
+                <User />
               </AdminRequireAuth>
             }
           />

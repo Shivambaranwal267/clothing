@@ -13,6 +13,10 @@ const Sidebar = () => {
           </li>
 
           <li>
+            <Link to="/admin/banner/show">Banner</Link>
+          </li>
+
+          <li>
             <Link to="/admin/categories">Categories</Link>
           </li>
 
@@ -29,7 +33,7 @@ const Sidebar = () => {
           </li>
 
           <li>
-            <Link to="">Users</Link>
+            <Link to="/admin/user">Users</Link>
           </li>
 
           <li>

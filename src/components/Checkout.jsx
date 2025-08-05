@@ -9,6 +9,7 @@ import { apiUrl, userToken } from "./common/http";
 import { toast } from "react-toastify";
 
 const Checkout = () => {
+
   const [paymentMethod, setPaymentMethod] = useState("cod");
 
   const { cartData, grandTotal, shipping, subTotal } = useContext(CartContext);
@@ -22,8 +23,35 @@ const Checkout = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: async () => {
+          await fetch(`${apiUrl}/get-profile-details`, {
+            method: "GET",
+            headers: {
+              "Content-type": "application/json",
+              Accept: "application/json",
+              Authorization: `Bearer ${userToken()}`,
+            },
+          })
+            .then((res) => res.json())
+            .then((result) => {
+
+              reset({
+                name: result.data.name,
+                email: result.data.email,
+                mobile: result.data.mobile,
+                address: result.data.address,
+                city: result.data.city,
+                state: result.data.state,
+                zip: result.data.zip,
+              });
+            });
+        },
+  }
+    
+  );
 
   const processOrder = (data) => {
     if (paymentMethod == "cod") {
@@ -115,7 +143,7 @@ const Checkout = () => {
                         },
                       })}
                       type="text"
-                      className={`form-control ${errors.name && "is-invalid"}`}
+                      className={`form-control ${errors.email && "is-invalid"}`}
                       placeholder="Email"
                     />
                     {errors.email && (
