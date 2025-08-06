@@ -183,12 +183,9 @@ const Product = () => {
                       <button
                         onClick={() => setSizeSelected(product_size.size.name)}
                         key={`p-size-${product_size.id}`}
-                        className={`btn btn-size me-2 ${sizeSelected == product_size.size.name ?
-                        'active' : ''}`
-                      }
-
-                        
-
+                        className={`btn btn-size me-2 ${
+                          sizeSelected == product_size.size.name ? "active" : ""
+                        }`}
                       >
                         {product_size.size.name}
                       </button>

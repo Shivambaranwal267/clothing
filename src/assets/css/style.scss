@@ -71,7 +71,9 @@ ul {
     border-color: rgba($primary-black, 0.05);
     padding: 7px 15px;
     &.active {
-      border-color: rgba($primary-black, 0.2);
+      background-color: $primary-color; /* Blue color for active state */
+      border-color: $secondary-color; /* Match border to background */
+      color: $primary-white; /* White text for contrast */
     }
     &:hover {
       border-color: rgba($primary-black, 0.2);

@@ -17,13 +17,12 @@ const OrderDetail = () => {
     register,
     handleSubmit,
     reset,
-    setError,
     formState: { errors },
   } = useForm();
 
   const fetchOrder = async () => {
     setLoader(true);
-    const res = await fetch(`${apiUrl}/orders/${params.id}`, {
+    await fetch(`${apiUrl}/orders/${params.id}`, {
       method: "GET",
       headers: {
         "Content-type": "application/json",
@@ -51,7 +50,7 @@ const OrderDetail = () => {
 
   const updateOrder = async (data) => {
     setLoader(true);
-    const res = await fetch(`${apiUrl}/update-order/${params.id}`, {
+     await fetch(`${apiUrl}/update-order/${params.id}`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
