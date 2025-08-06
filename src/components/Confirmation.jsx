@@ -33,7 +33,7 @@ const Confirmation = () => {
 
   useEffect(() => {
     fetchOrder();
-  },[]);
+  }, []);
 
   return (
     <Layout>
@@ -82,7 +82,12 @@ const Confirmation = () => {
                       )}
                     </p>
                     <p>
-                      <strong>Payment Method: </strong> COD
+                      <strong>Payment Method: </strong>
+                      {order.payment_method == "stripe" ? (
+                        <span className="badge bg-success">Stripe</span>
+                      ) : (
+                        <span className="badge bg-warning">COD</span>
+                      )}
                     </p>
                   </div>
                   <div className="col-6">
@@ -148,10 +153,10 @@ const Confirmation = () => {
                     <button className="btn btn-primary">
                       View Order Details
                     </button>
-                    <Link to={'/'}>
-                    <button className="btn btn-outline-secondary ms-2">
-                      Continue Shopping
-                    </button>
+                    <Link to={"/"}>
+                      <button className="btn btn-outline-secondary ms-2">
+                        Continue Shopping
+                      </button>
                     </Link>
                   </div>
                 </div>
